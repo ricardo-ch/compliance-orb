@@ -3,7 +3,7 @@
 IMAGE=$1
 
 is_docker_user_root() {
-uid=$(docker run $IMAGE id -u)
+uid=$(docker run "$IMAGE" id -u)
 
 if [ "$uid" == 0 ];
 then
