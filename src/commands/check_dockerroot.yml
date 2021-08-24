@@ -1,0 +1,23 @@
+description: >
+  This command check's if target docker image user is root user
+parameters:
+  image:
+    type: string
+    description: Docker image
+  username:
+    type: string
+    default: ""
+  password:
+    type: string
+    default: ""
+  url:
+    type: string
+    default: ""
+steps:
+  - docker_registry:
+      username: << parameters.username >>
+      password: << parameters.password >>
+      url: << parameters.url >>
+  - run:
+      name: check for root in docker image
+      command: <<include(scripts/isdockeruserroot.sh)>> << parameters.image >>

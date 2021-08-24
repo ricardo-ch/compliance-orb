@@ -1,0 +1,20 @@
+description: >
+  This job runs security checks on docker images
+executor: default
+parameters:
+  image:
+    type: string
+    description: Docker image
+  username:
+    type: string
+  password:
+    type: string
+  url:
+    type: string
+    default: ""
+steps:
+  - check_dockerroot:
+      image: << parameters.image >>
+      username: << parameters.username >>
+      password: << parameters.password >>
+      url: << parameters.url >>
