@@ -44,21 +44,6 @@ This orb is not listed. To list it again use `circleci orb unlist <namespace>/<o
 
 The currently released version is **not published**
 
-## Known Issue
-
-You may get this error when pushing a new PR,
-
-```bash
-The dev version of ricardo/compliance-orb@dev:alpha has expired. Dev versions of orbs are only valid for 90 days after publishing.
-```
-
-If you see this error, you need to publish a dev:alpha version manually. The fix is to run this:
-
-```bash
-circleci orb pack ./src | circleci orb validate -
-circleci orb pack ./src | circleci orb publish -  ricardo/compliance-orb@dev:alpha
-```
-
 ## Usage
 
 To use the orb add this:
@@ -78,3 +63,30 @@ Usage, examples and docs:
 * [Orb](src/README.md)
 * [Examples](src/examples/README.md)
 
+## Development
+
+## Local testing
+
+Before pushing to repository run:
+
+```shell
+circleci orb pack src | circleci orb validate - 
+```
+
+The command above will validate syntax and format of your orb. The same checks are done during build on CircleCI.
+Do not commit generated file: orb.yml.
+
+## Known Issue
+
+You may get this error when pushing a new PR,
+
+```bash
+The dev version of ricardo/compliance-orb@dev:alpha has expired. Dev versions of orbs are only valid for 90 days after publishing.
+```
+
+If you see this error, you need to publish a dev:alpha version manually. The fix is to run this:
+
+```bash
+circleci orb pack ./src | circleci orb validate -
+circleci orb pack ./src | circleci orb publish -  ricardo/compliance-orb@dev:alpha
+```
