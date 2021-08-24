@@ -20,4 +20,4 @@ steps:
       url: << parameters.url >>
   - run:
       name: check for root in docker image
-      command: <<include(scripts/isdockeruserroot.sh << parameters.image >>)>>
+      command: <<include(scripts/isdockeruserroot.sh \<< parameters.image \>>)>>
