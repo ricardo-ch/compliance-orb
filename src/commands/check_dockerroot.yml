@@ -19,6 +19,9 @@ steps:
       password: << parameters.password >>
       url: << parameters.url >>
   - run:
+      name: pull target image << parameters.image >>
+      command: docker pull << parameters.image >>
+  - run:
       name: check for root in docker image
       enviroment:
         TARGET_IMAGE: << parameters.image >>

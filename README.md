@@ -49,7 +49,7 @@ The currently released version is **not published**
 To use the orb add this:
 ```yaml
 orbs:
-  ric-orb: ricardo/compliance-orb@<published_version>
+  compliance: ricardo/compliance-orb@<published_version>
 ```
 
 to your `.circleci/config.yml` file.
