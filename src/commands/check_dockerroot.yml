@@ -1,9 +1,6 @@
 description: >
   This command check's if target docker image user is root user
 parameters:
-  image_file:
-    type: string
-    description: file where Docker image name is stored
   username:
     type: string
     default: ""
@@ -21,9 +18,7 @@ steps:
   - run:
       name: pull target image
       command: |
-        docker pull $(cat << parameters.image_file >>)
+        docker pull $(isopod image)
   - run:
       name: check for root in docker image
-      enviroment:
-        TARGET_IMAGE_FILE: << parameters.image_file >>
       command: <<include(scripts/isdockeruserroot.sh)>>

@@ -9,9 +9,6 @@ parameters:
     type: string
   executor_registry_password:
     type: string
-  image_name_file:
-    type: string
-    description: File where Docker image name is stored
   username:
     type: string
   password:
