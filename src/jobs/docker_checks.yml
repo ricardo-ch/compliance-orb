@@ -18,6 +18,7 @@ parameters:
     default: ""
 steps:
   - checkout
+  - setup_remote_docker
   - check_dockerroot:
       username: << parameters.username >>
       password: << parameters.password >>
