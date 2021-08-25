@@ -19,7 +19,6 @@ parameters:
 steps:
   - checkout
   - check_dockerroot:
-      image_file: << parameters.image_name_file >>
       username: << parameters.username >>
       password: << parameters.password >>
       url: << parameters.url >>
