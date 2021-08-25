@@ -1,13 +1,13 @@
 description: >
   This is a sample executor using Docker and Node.
 docker:
-  - image: 'cimg/base:<<parameters.tag>>'
+  - image: 'ric-docker.jfrog.io/ricardo-ch/compliance:<<parameters.tag>>'
     auth:
       username: << parameters.username >>
       password: << parameters.password >>
 parameters:
   tag:
-    default: stable-20.04
+    default: test
     description: >
       Pick a specific circleci/base image variant:
       https://hub.docker.com/r/cimg/base/tags
