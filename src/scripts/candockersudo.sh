@@ -6,7 +6,7 @@ is_sudo_available() {
 
 sudo_path=$(docker run "$TARGET_IMAGE" command -v sudo)
 
-if [ -z $sudo_path ];
+if [ -z "$sudo_path" ];
 then
     echo "sudo could not be found"
     exit 0
