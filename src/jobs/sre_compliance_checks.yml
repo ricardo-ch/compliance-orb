@@ -23,3 +23,7 @@ steps:
       username: << parameters.username >>
       password: << parameters.password >>
       url: << parameters.url >>
+  - check_dockersudo:
+      username: << parameters.username >>
+      password: << parameters.password >>
+      url: << parameters.url >>

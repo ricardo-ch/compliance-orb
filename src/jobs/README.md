@@ -6,7 +6,7 @@ Each _YAML_ file within this directory will be treated as an orb job, with a nam
 
 Jobs may invoke orb commands and other steps to fully automate tasks with minimal user configuration.
 
-View the included _[hello.yml](./docker_checks.yml)_ example.
+View the included _[hello.yml](./sre_compliance_checks.yml)_ example.
 
 
 ```yaml

@@ -1,0 +1,24 @@
+description: >
+  This command check's if target docker image user is root user
+parameters:
+  username:
+    type: string
+    default: ""
+  password:
+    type: string
+    default: ""
+  url:
+    type: string
+    default: ""
+steps:
+  - docker_registry:
+      username: << parameters.username >>
+      password: << parameters.password >>
+      url: << parameters.url >>
+  - run:
+      name: pull target image
+      command: |
+        docker pull $(isopod image)
+  - run:
+      name: check for root in docker image
+      command: <<include(scripts/candockersudo.sh)>>
