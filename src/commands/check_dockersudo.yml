@@ -20,5 +20,5 @@ steps:
       command: |
         docker pull $(isopod image)
   - run:
-      name: check for root in docker image
+      name: check for sudo permissions in Container
       command: <<include(scripts/candockersudo.sh)>>

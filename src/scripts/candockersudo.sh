@@ -8,13 +8,18 @@ sudo_path=$(docker run "$TARGET_IMAGE" which sudo)
 
 if [ -z "$sudo_path" ];
 then
-    echo "sudo could not be found"
-    exit 0
+    return 1
 fi
 
 }
 
 get_sudo_permissions() {
+
+if ! is_sudo_available;
+  then
+  echo "sudo could not be found"
+  return 0
+fi
 
 # Check for passwordless sudo permissions
 sudo_permssions=$(docker run "$TARGET_IMAGE" sudo -nl)
@@ -31,6 +36,5 @@ fi
 
 }
 
-is_sudo_available
 get_sudo_permissions
 
