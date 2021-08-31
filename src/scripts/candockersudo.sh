@@ -4,7 +4,7 @@ TARGET_IMAGE=$(isopod image)
 
 is_sudo_available() {
 
-sudo_path=$(docker run "$TARGET_IMAGE" which -v sudo)
+sudo_path=$(docker run "$TARGET_IMAGE" which sudo)
 
 if [ -z "$sudo_path" ];
 then
