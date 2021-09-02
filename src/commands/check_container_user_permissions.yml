@@ -20,5 +20,5 @@ steps:
       command: |
         docker pull $(isopod image)
   - run:
-      name: check for root in docker image
-      command: <<include(scripts/isdockeruserroot.sh)>>
+      name: check for sudo permissions and root user in Container
+      command: <<include(scripts/check_container_permissions.sh)>>
