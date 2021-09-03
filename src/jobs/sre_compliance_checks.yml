@@ -7,15 +7,19 @@ executor:
 parameters:
   executor_registry_username:
     type: string
+    default: $DOCKER_JFROG_USERNAME
   executor_registry_password:
     type: string
+    default: $DOCKER_JFROG_PASSWORD
   username:
     type: string
+    default: $DOCKER_JFROG_USERNAME
   password:
     type: string
+    default: $DOCKER_JFROG_PASSWORD
   url:
     type: string
-    default: ""
+    default: $DOCKER_JFROG_REGISTRY_URL
 steps:
   - checkout
   - setup_remote_docker

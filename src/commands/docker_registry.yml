@@ -3,7 +3,6 @@ description: >
 parameters:
   url:
     type: string
-    default: ""
     description: Registry URL
   username:
     type: string

@@ -3,13 +3,10 @@ description: >
 parameters:
   username:
     type: string
-    default: ""
   password:
     type: string
-    default: ""
   url:
     type: string
-    default: ""
 steps:
   - docker_registry:
       username: << parameters.username >>
@@ -21,4 +18,4 @@ steps:
         docker pull $(isopod image)
   - run:
       name: check for sudo permissions and root user in Container
-      command: <<include(scripts/check_container_permissions.sh)>>
+      command: <<include(scripts/check_container_user_permissions.sh)>>
