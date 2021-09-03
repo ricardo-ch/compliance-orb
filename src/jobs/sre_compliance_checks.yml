@@ -20,9 +20,6 @@ parameters:
   url:
     type: string
     default: $DOCKER_JFROG_REGISTRY_URL
-  context:
-    type: string
-    default: dev
 steps:
   - checkout
   - setup_remote_docker
