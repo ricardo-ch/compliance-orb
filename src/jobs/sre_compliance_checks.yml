@@ -20,10 +20,14 @@ parameters:
   url:
     type: string
     default: $DOCKER_JFROG_REGISTRY_URL
+  imageName:
+    type: string
+    default: ""
 steps:
   - checkout
   - setup_remote_docker
   - check_container_user_permissions:
       username: << parameters.username >>
       password: << parameters.password >>
+      imageName: << parameters.imageName >>
       url: << parameters.url >>
