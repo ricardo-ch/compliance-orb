@@ -37,7 +37,17 @@ steps:
 * **url** (optional): URL to the image in the Container registry to pull the image. Default value defined in context env var: `$DOCKER_JFROG_REGISTRY_URL`
 
 
-Example:
+Examples:
+```yaml
+  development_workflow:
+    jobs:
+      - compliance/sre_compliance_checks:
+          context: dev
+          imageName: "nginx:latest" # Specify a container name if 'isopod image' is not applicable
+          requires:
+            - build_image
+```
+or 
 ```yaml
   development_workflow:
     jobs:
@@ -46,8 +56,6 @@ Example:
           requires:
             - build_image
 ```
-
-
 ## See:
  - [Orb Author Intro](https://circleci.com/docs/2.0/orb-author-intro/#section=configuration)
  - [How to author commands](https://circleci.com/docs/2.0/reusing-config/#authoring-reusable-commands)
