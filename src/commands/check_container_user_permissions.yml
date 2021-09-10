@@ -7,6 +7,9 @@ parameters:
     type: string
   url:
     type: string
+  imageName:
+    type: string
+    default: ""
 steps:
   - docker_registry:
       username: << parameters.username >>
@@ -17,5 +20,7 @@ steps:
       command: |
         docker pull $(isopod image)
   - run:
+      environment:
+        imageName: << parameters.imageName >>
       name: check for sudo permissions and root user in Container
       command: <<include(scripts/check_container_user_permissions.sh)>>

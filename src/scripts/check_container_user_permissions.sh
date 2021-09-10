@@ -1,8 +1,17 @@
 #!/usr/bin/env sh
 
-TARGET_IMAGE=$(isopod image)
+TARGET_IMAGE="${imageName}"
+
+if [ -z $TARGET_IMAGE ];
+then
+  TARGET_IMAGE=$(isopod image)
+fi
+
+
 
 is_docker_user_root() {
+
+
 uid=$(docker run "$TARGET_IMAGE" id -u)
 
 if [ "$uid" == 0 ];
