@@ -1,10 +1,12 @@
 #!/usr/bin/env sh
 
-TARGET_IMAGE="${imageName}"
 
-if [ -z $TARGET_IMAGE ];
+
+if [ -z "${imageName}" ];
 then
   TARGET_IMAGE=$(isopod image)
+else
+  TARGET_IMAGE="${imageName}"
 fi
 
 
