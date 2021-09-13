@@ -1,14 +1,58 @@
-# Orb Project Template
+# SRE Compliance Orb
 
 [![CircleCI Build Status](https://circleci.com/gh/ricardo-ch/compliance-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/ricardo-ch/compliance-orb) [![CircleCI Orb Version](https://badges.circleci.com/orbs/ricardo/compliance-orb.svg)](https://circleci.com/orbs/registry/orb/ricardo/compliance-orb) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/ricardo-ch/compliance-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
 
+## Overview
+
+The goal of the SRE compliance Orb is to make non-compliance to SRE standards visible.
+There are currently 2 hard requirements which need to be fulfilled by the orb:
+* No, gatekeepers. Failing checks must not stop the pipeline to run successful
+* Checks need to run asynchronous to not increase the deployment time of the apps
+
+By using the major version reference `ricardo/compliance-orb@1` in the projects `.circleci/config.yml` file, newly added tests will be automatically executed on new runs of the pipeline.
+This will ensure the compliance Orb will add as less additional work to application maintainers as possible.
+
+## How to use
+
+To use the orb add this:
+```yaml
+orbs:
+  compliance: ricardo/compliance-orb@<published_version>
+```
+
+to your `.circleci/config.yml` file.
+
+Usage, examples and docs:
+
+* [Commands](src/commands/README.md)
+* [Executors](src/executors/README.md)
+* [Jobs](src/jobs/README.md)
+* [Scripts](src/scripts/README.md)
+* [Orb](src/README.md)
 
 
-A starter template for orb projects. Build, test, and publish orbs automatically on CircleCI with [Orb-Tools](https://circleci.com/orbs/registry/orb/circleci/orb-tools).
+## How to develop
 
-Additional READMEs are available in each directory.
+Make sure the added changes are respecting the requirements described in [Overview](#Overview)
 
+### Versioning
 
+* `Major` versions are only used for breaking changes.
+* For new checks or functions use `minor`
+* To fix issues in existing tests use `patch`
+
+Versions are described in ["How to publish"](#How to Publish) section of this document.
+
+### Local testing
+
+Before pushing to repository run:
+
+```shell
+circleci orb pack src | circleci orb validate - 
+```
+
+The command above will validate syntax and format of your orb. The same checks are done during build on CircleCI.
+Do not commit generated file: orb.yml.
 
 ## Resources
 
@@ -44,37 +88,6 @@ This orb is not listed. To list it again use `circleci orb unlist <namespace>/<o
 
 The currently released version is **not published**
 
-## Usage
-
-To use the orb add this:
-```yaml
-orbs:
-  compliance: ricardo/compliance-orb@<published_version>
-```
-
-to your `.circleci/config.yml` file.
-
-Usage, examples and docs:
-
-* [Commands](src/commands/README.md)
-* [Executors](src/executors/README.md)
-* [Jobs](src/jobs/README.md)
-* [Scripts](src/scripts/README.md)
-* [Orb](src/README.md)
-* [Examples](src/examples/README.md)
-
-## Development
-
-## Local testing
-
-Before pushing to repository run:
-
-```shell
-circleci orb pack src | circleci orb validate - 
-```
-
-The command above will validate syntax and format of your orb. The same checks are done during build on CircleCI.
-Do not commit generated file: orb.yml.
 
 ## Known Issue
 
