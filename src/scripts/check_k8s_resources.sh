@@ -9,7 +9,7 @@ render_k8s_resources() {
       exit 1
   fi
 
-  isopod -f "$ISOPOD_FILE" deploy -e prod --dry-run
+  isopod -f "$ISOPOD_FILE" deploy -e dev --dry-run
 }
 
 cleanup_and_quit() {
