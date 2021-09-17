@@ -4,6 +4,8 @@ COMPLIANT=true
 
 render_k8s_resources() {
 
+  echo "Info: starting rendering"
+
   if [ ! -f "$ISOPOD_FILE" ]; then
       echo "$ISOPOD_FILE not found. Specify file path with 'isopodFile' in CirclCI. More infos in compliance-orb Readme"
       exit 1
@@ -11,9 +13,13 @@ render_k8s_resources() {
 
   # ignore error of missing context. Command only needs to render new resources and doesn't care about already deployed
   isopod -f "$ISOPOD_FILE" deploy -e prod --dry-run || true
+
+  echo "Info: rendering finished"
 }
 
 cleanup_and_quit() {
+
+  echo "Info: Cleaning up"
   rm output.json
   rm -rf /tmp/-k8s-manifest-files*
 
@@ -22,12 +28,15 @@ cleanup_and_quit() {
     exit 1
   fi
 
+  echo "Info: Done"
   exit 0
 }
 
 check_privileged_flag() {
+echo "Info: Validating K8S resources"
 for file in /tmp/*-k8s-manifest-files*/*.yml
 do
+  echo "Info: Validating $file"
   opa eval --fail-defined -i "$file" -d opa-rules/container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
 
   RESULT=$(jq .result[]?.expressions[]?.value.deny[]? < output.json)
@@ -38,8 +47,8 @@ do
     COMPLIANT=false
   fi
 done
+echo "Info: Finished validating K8S resources"
 
-return 0
 }
 
 render_k8s_resources
