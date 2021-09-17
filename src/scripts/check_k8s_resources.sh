@@ -9,7 +9,7 @@ render_k8s_resources() {
       exit 1
   fi
 
-  isopod -f $ISOPOD_FILE deploy -e prod --dry-run
+  isopod -f "$ISOPOD_FILE" deploy -e prod --dry-run
 }
 
 cleanup_and_quit() {
@@ -26,11 +26,11 @@ cleanup_and_quit() {
 
 check_privileged_flag() {
 for file in $(ls /tmp/-k8s-manifest-files*/*.yml); do
-  opa eval --fail-defined -i $file -d opa-rules/container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
+  opa eval --fail-defined -i "$file" -d opa-rules/container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
 
   RESULT=$(cat output.json | jq .result[].expressions[].value.deny[])
 
-  if [ ! -z "$RESULT" ];
+  if [ -n "$RESULT" ];
   then
     echo "Non compliance detected: $RESULT"
     COMPLIANT=false
