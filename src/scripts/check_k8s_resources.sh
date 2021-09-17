@@ -26,7 +26,7 @@ cleanup_and_quit() {
 }
 
 check_privileged_flag() {
-for file in /tmp/-k8s-manifest-files*/*.yml
+for file in /tmp/*-k8s-manifest-files*/*.yml
 do
   opa eval --fail-defined -i "$file" -d opa-rules/container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
 
