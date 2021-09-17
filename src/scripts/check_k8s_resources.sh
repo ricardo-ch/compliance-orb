@@ -9,7 +9,8 @@ render_k8s_resources() {
       exit 1
   fi
 
-  isopod -f "$ISOPOD_FILE" deploy -e dev --dry-run
+  # ignore error of missing context. Command only needs to render new resources and doesn't care about already deployed
+  isopod -f "$ISOPOD_FILE" deploy -e prod --dry-run || true
 }
 
 cleanup_and_quit() {
