@@ -61,9 +61,9 @@ do
   echo "Info: Validating $file"
 
   echo "Debug: Exit code $?"
-  opa eval --fail-defined -i "$file" -d container-privileged-flag.rego "data.kubernetes.validating.privileged"
+  opa eval -i "$file" -d container-privileged-flag.rego "data.kubernetes.validating.privileged"
   echo "Debug: Exit code $?"
-  opa eval --fail-defined -i "$file" -d container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
+  opa eval -i "$file" -d container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
   echo "Debug: Exit code $?"
 
   RESULT=$(jq .result[]?.expressions[]?.value.deny[]? < output.json)
