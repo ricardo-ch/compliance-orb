@@ -23,7 +23,7 @@ cleanup_and_quit() {
   rm output.json
   rm -rf /tmp/-k8s-manifest-files*
 
-  if [ $COMPLIANT == false ];
+  if [ $COMPLIANT = false ];
   then
     exit 1
   fi
