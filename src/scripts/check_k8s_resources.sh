@@ -32,12 +32,34 @@ cleanup_and_quit() {
   exit 0
 }
 
+write_rego_file() {
+
+cat <<EOT >> container-privileged-flag.rego
+package kubernetes.validating.privileged
+
+deny[msg] {
+  some c
+  input_container[c]
+  c.securityContext.privileged
+  msg := sprintf("Container '%v' should not run in privileged mode.", [c.name])
+}
+
+input_container[container] {
+  container := input.spec.template.spec.containers[_]
+}
+
+input_container[container] {
+  container := input.spec.template.spec.initContainers[_]
+}
+EOT
+}
+
 check_privileged_flag() {
 echo "Info: Validating K8S resources"
 for file in /tmp/*-k8s-manifest-files*/*.yml
 do
   echo "Info: Validating $file"
-  opa eval --fail-defined -i "$file" -d opa-rules/container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
+  opa eval --fail-defined -i "$file" -d container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
 
   RESULT=$(jq .result[]?.expressions[]?.value.deny[]? < output.json)
 
@@ -52,6 +74,7 @@ echo "Info: Finished validating K8S resources"
 }
 
 render_k8s_resources
+write_rego_file
 check_privileged_flag
 cleanup_and_quit
 
