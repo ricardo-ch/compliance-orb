@@ -1,0 +1,12 @@
+description: >
+  This command check's if target docker image user is root user
+parameters:
+  isopodFile:
+    type: string
+    default: "isopod.yml"
+steps:
+  - run:
+      environment:
+        ISOPOD_FILE: << parameters.isopodFile >>
+      name: Check Kubernets Resource Definitions for compliance
+      command: <<include(scripts/check_k8s_resources.sh)>>

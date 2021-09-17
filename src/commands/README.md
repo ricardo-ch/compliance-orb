@@ -56,6 +56,28 @@ or
           requires:
             - build_image
 ```
+
+## K8S resources compliance check
+
+**Name:** _check_k8s_resources_ <br>
+**Description:** Command _check_k8s_resources_ checks if K8S resources are compliant to SRE standards
+
+**Parameters:**
+
+* **isopodFile** (optional): Specify path to isopod.yml file. Default is 'isopod.yml'
+
+Examples:
+```yaml
+  development_workflow:
+    jobs:
+      - compliance/sre_compliance_checks:
+          context: dev
+          isopodFile: "/path/to/isopod.yml" # Specify path to isopod.yml file. Default is 'isopod.yml'
+          requires:
+            - build_image
+```
+
+
 ## See:
  - [Orb Author Intro](https://circleci.com/docs/2.0/orb-author-intro/#section=configuration)
  - [How to author commands](https://circleci.com/docs/2.0/reusing-config/#authoring-reusable-commands)

@@ -23,6 +23,9 @@ parameters:
   imageName:
     type: string
     default: ""
+  isopodFile:
+    type: string
+    default: "isopod.yml"
 steps:
   - checkout
   - setup_remote_docker
@@ -31,3 +34,5 @@ steps:
       password: << parameters.password >>
       imageName: << parameters.imageName >>
       url: << parameters.url >>
+  - check_k8s_resources:
+      isopodFile: << parameters.isopodFile >>
