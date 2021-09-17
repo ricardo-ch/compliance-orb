@@ -59,15 +59,22 @@ echo "Info: Validating K8S resources"
 for file in /tmp/*-k8s-manifest-files*/*.yml
 do
   echo "Info: Validating $file"
+
+  echo "Debug: Exit code $?"
+  opa eval --fail-defined -i "$file" -d container-privileged-flag.rego "data.kubernetes.validating.privileged"
+  echo "Debug: Exit code $?"
   opa eval --fail-defined -i "$file" -d container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
+  echo "Debug: Exit code $?"
 
   RESULT=$(jq .result[]?.expressions[]?.value.deny[]? < output.json)
+  echo "Debug: Exit code $?"
 
   if [ -n "$RESULT" ];
   then
     echo "Non compliance detected: $RESULT"
     COMPLIANT=false
   fi
+  echo "Debug: Exit code $?"
 done
 echo "Info: Finished validating K8S resources"
 
