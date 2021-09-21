@@ -1,5 +1,5 @@
 description: >
-  Compliance executor
+  Compliance base image executor
 docker:
   - image: 'ric-docker.jfrog.io/ricardo-ch/compliance:<<parameters.tag>>'
     auth:
