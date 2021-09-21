@@ -6,7 +6,6 @@ Each _YAML_ file within this directory will be treated as an orb executor, with 
 
 Executors can be used to parameterize the same environment across many jobs. Orbs nor jobs _require_ executors, but may be helpful in some cases, such as: [parameterizing the Node version for a testing job so that matrix testing may be used](https://circleci.com/orbs/registry/orb/circleci/node#usage-run_matrix_testing).
 
-
 ## See:
  - [Orb Author Intro](https://circleci.com/docs/2.0/orb-author-intro/#section=configuration)
  - [How To Author Executors](https://circleci.com/docs/2.0/reusing-config/#authoring-reusable-executors)
