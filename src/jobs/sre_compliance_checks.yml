@@ -1,0 +1,38 @@
+description: >
+  This job runs security checks on docker images
+executor:
+  name: default
+  username: << parameters.executor_registry_username >>
+  password: << parameters.executor_registry_password >>
+parameters:
+  executor_registry_username:
+    type: string
+    default: $DOCKER_JFROG_USERNAME
+  executor_registry_password:
+    type: string
+    default: $DOCKER_JFROG_PASSWORD
+  username:
+    type: string
+    default: $DOCKER_JFROG_USERNAME
+  password:
+    type: string
+    default: $DOCKER_JFROG_PASSWORD
+  url:
+    type: string
+    default: $DOCKER_JFROG_REGISTRY_URL
+  imageName:
+    type: string
+    default: ""
+  isopodFile:
+    type: string
+    default: "isopod.yml"
+steps:
+  - checkout
+  - setup_remote_docker
+  - check_container_user_permissions:
+      username: << parameters.username >>
+      password: << parameters.password >>
+      imageName: << parameters.imageName >>
+      url: << parameters.url >>
+  - check_k8s_resources:
+      isopodFile: << parameters.isopodFile >>

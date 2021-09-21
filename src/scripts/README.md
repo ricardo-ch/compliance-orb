@@ -9,32 +9,51 @@ As a part of keeping things seperate, it is encouraged to use environment variab
 Utilizing the `circleci orb pack` CLI command, it is possible to import files (such as _shell scripts_), using the `<<include(scripts/script_name.sh)>>` syntax in place of any config key's value.
 
 ```yaml
-# commands/greet.yml
+# commands/check_container_user_permissions.yml
 description: >
-  This command echos "Hello World" using file inclusion.
+  This command check's if target docker image user is root user
 parameters:
-  to:
+  username:
     type: string
-    default: "World"
-    description: "Hello to who?"
+  password:
+    type: string
+  url:
+    type: string
+  imageName:
+    type: string
+    default: ""
 steps:
+  - docker_registry:
+      username: << parameters.username >>
+      password: << parameters.password >>
+      url: << parameters.url >>
+  - run:
+      name: pull target image
+      command: |
+        docker pull $(isopod image)
   - run:
       environment:
-        PARAM_TO: <<parameters.to>
-      name: Hello <<parameters.to>
-      command: <<include(scripts/greet.sh)>>
-
+        IMAGE_NAME: << parameters.imageName >>
+      name: check for sudo permissions and root user in Container
+      command: <<include(scripts/check_container_user_permissions.sh)>>
 ```
 
 ```shell
-# scripts/greet.sh
-Greet() {
-    echo Hello ${PARAM_TO}
-}
+# scripts/check_container_user_permissions.sh
+#!/usr/bin/env sh
 
-# Will not run if sourced from another script. This is done so this script may be tested.
-# View src/tests for more information.
-if [[ "$_" == "$0" ]]; then
-    Greet
+if [ -z "${IMAGE_NAME}" ];
+then
+  TARGET_IMAGE=$(isopod image)
+else
+  TARGET_IMAGE="${IMAGE_NAME}"
 fi
+
+...
+...
+...
+
+get_sudo_permissions
+
+
 ```

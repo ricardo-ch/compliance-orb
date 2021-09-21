@@ -1,0 +1,26 @@
+description: >
+  This command check's if target docker image user is root user
+parameters:
+  username:
+    type: string
+  password:
+    type: string
+  url:
+    type: string
+  imageName:
+    type: string
+    default: ""
+steps:
+  - docker_registry:
+      username: << parameters.username >>
+      password: << parameters.password >>
+      url: << parameters.url >>
+  - run:
+      name: pull target image
+      command: |
+        docker pull $(isopod image)
+  - run:
+      environment:
+        IMAGE_NAME: << parameters.imageName >>
+      name: check for sudo permissions and root user in Container
+      command: <<include(scripts/check_container_user_permissions.sh)>>
