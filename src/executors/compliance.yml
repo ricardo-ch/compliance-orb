@@ -1,5 +1,5 @@
 description: >
-  This is a sample executor using Docker and Node.
+  Compliance executor
 docker:
   - image: 'ric-docker.jfrog.io/ricardo-ch/compliance:<<parameters.tag>>'
     auth:
@@ -7,10 +7,9 @@ docker:
       password: << parameters.password >>
 parameters:
   tag:
-    default: test
+    default: latest
     description: >
-      Pick a specific circleci/base image variant:
-      https://hub.docker.com/r/cimg/base/tags
+      Pick a specific compliance image variant
     type: string
   username:
     type: string

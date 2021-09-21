@@ -1,7 +1,7 @@
 description: >
   This job runs security checks on docker images
 executor:
-  name: default
+  name: compliance
   username: << parameters.executor_registry_username >>
   password: << parameters.executor_registry_password >>
 parameters:
