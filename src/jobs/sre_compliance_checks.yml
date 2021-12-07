@@ -26,6 +26,9 @@ parameters:
   isopodFile:
     type: string
     default: "isopod.yml"
+  sreApiUrl:
+    type: string
+    default: $SRE_API_URL
 steps:
   - checkout
   - setup_remote_docker
@@ -36,3 +39,5 @@ steps:
       url: << parameters.url >>
   - check_k8s_resources:
       isopodFile: << parameters.isopodFile >>
+  - submit_compliance_results:
+      sreApiUrl: << parameters.sreApiUrl >>
