@@ -23,4 +23,4 @@ steps:
       environment:
         IMAGE_NAME: << parameters.imageName >>
       name: check for sudo permissions and root user in Container
-      command: <<include(scripts/check_container_user_permissions.sh)>>
+      command: <<include(scripts/checks/check_container_user_permissions.sh)>>

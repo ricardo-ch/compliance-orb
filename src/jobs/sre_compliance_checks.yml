@@ -39,5 +39,6 @@ steps:
       url: << parameters.url >>
   - check_k8s_resources:
       isopodFile: << parameters.isopodFile >>
+  - port_forward_sre_api
   - submit_compliance_results:
       sreApiUrl: << parameters.sreApiUrl >>

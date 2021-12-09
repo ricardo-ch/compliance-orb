@@ -9,4 +9,4 @@ steps:
       environment:
         ISOPOD_FILE: << parameters.isopodFile >>
       name: Check Kubernets Resource Definitions for compliance
-      command: <<include(scripts/check_k8s_resources.sh)>>
+      command: <<include(scripts/checks/check_k8s_resources.sh)>>

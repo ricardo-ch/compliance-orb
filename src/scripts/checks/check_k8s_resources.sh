@@ -1,6 +1,19 @@
 #!/usr/bin/env sh
 
-COMPLIANT=true
+CHECK_NAME="Check Root User"
+PENALTY_SCORE=20
+COMPLIANT=false
+
+write_result() {
+
+  jq --null-input \
+    --arg checkname "$CHECK_NAME" \
+    --arg compliant "$COMPLIANT" \
+    --arg penaltyScore "$PENALTY_SCORE" \
+      '{"compliance-check-name": $checkname, "compliant": $compliant, "penalty-score": $penaltyScore}' \
+    > $appName-checks.json
+}
+
 
 render_k8s_resources() {
 
@@ -22,6 +35,7 @@ cleanup_and_quit() {
 
   if [ $COMPLIANT = false ];
   then
+
     exit 1
   fi
 
@@ -61,7 +75,8 @@ do
   if [ -n "$RESULT" ];
   then
     echo "Non compliance detected: $RESULT"
-    COMPLIANT=false
+  else
+    COMPLIANT=true
   fi
 
 done
@@ -71,6 +86,7 @@ done
 render_k8s_resources
 write_rego_file
 check_privileged_flag
+write_result
 cleanup_and_quit
 
 

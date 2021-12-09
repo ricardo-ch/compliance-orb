@@ -9,4 +9,4 @@ steps:
       environment:
         SRE_API_URL: << parameters.sreApiUrl >>
       name: Send compliance check results to SRE-API
-      command: <<include(scripts/send-compliance-results.sh)>>
+      command: <<include(scripts/orb-funcs/submit-compliance-results.sh)>>
