@@ -18,7 +18,7 @@ append_checks () {
     do 
         tmpfile=$(mktemp)
 
-        jq ".checks[.checks| length] |= . +$(jq . $file)" compliance-checks.json > ${tmpfile}
+        jq ".checks[.checks| length] |= . +$(jq . "$file")" compliance-checks.json > "${tmpfile}"
         cat "${tmpfile}" >  compliance-checks.json
 
     done
