@@ -11,7 +11,7 @@ write_result() {
     --arg compliant "$COMPLIANT" \
     --arg penaltyScore "$PENALTY_SCORE" \
       '{"compliance-check-name": $checkname, "compliant": $compliant, "penalty-score": $penaltyScore}' \
-    > $appName-checks.json
+    > "$CIRCLE_PR_REPONAME-checks.json"
 }
 
 
