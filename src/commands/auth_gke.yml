@@ -1,4 +1,3 @@
-
 description: >
   This command authenticates to GKE cluster. Required context/environment variables:
     - GCLOUD_SERVICE_KEY
