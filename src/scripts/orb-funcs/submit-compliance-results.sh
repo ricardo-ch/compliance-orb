@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 set -euf -o pipefail
 
 create_umbrella_json () {
@@ -14,12 +14,12 @@ create_umbrella_json () {
 
 append_checks () {    
 
-    for file in $(ls check-jsons);
+    for file in *.=check.jsons;
     do 
         tmpfile=$(mktemp)
 
-        jq ".checks[.checks| length] |= . +$(jq . check-jsons/$file)" compliance-checks.json > ${tmpfile}
-        cat ${tmpfile} >  compliance-checks.json
+        jq ".checks[.checks| length] |= . +$(jq . $file)" compliance-checks.json > ${tmpfile}
+        cat "${tmpfile}" >  compliance-checks.json
 
     done
 
