@@ -40,6 +40,7 @@ steps:
       url: << parameters.url >>
   - check_k8s_resources:
       isopodFile: << parameters.isopodFile >>
+  - auth_gke
   - port_forward_sre_api:
       context: $GKE_CLUSTER_NAME
   - submit_compliance_results:
