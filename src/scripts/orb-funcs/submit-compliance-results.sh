@@ -8,7 +8,7 @@ create_umbrella_json () {
         --arg branch "$CIRCLE_BRANCH" \
         --arg commit_sha "$CIRCLE_SHA1" \
         --arg cc_url "$CIRCLE_BUILD_URL" \
-        '{"application_name": $app, "branch": $branch, "commit_sha": $commit_sha , "circleci-run-url": $ci_url, "checks": []}' \
+        '{"application_name": $app, "branch": $branch, "commit_sha": $commit_sha , "ci_url": $cc_url, "checks": []}' \
         > compliance-checks.json
 }
 
