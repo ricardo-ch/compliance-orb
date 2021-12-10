@@ -17,10 +17,9 @@ write_result() {
     --arg checkname "$CHECK_NAME" \
     --arg compliant "$COMPLIANT" \
     --arg penaltyScore "$PENALTY_SCORE" \
-      '{"compliance-check-name": $checkname, "compliant": $compliant, "penalty-score": $penaltyScore}' \
+      '{"check_name": $checkname, "compliant": $compliant, "penalty_score": $penaltyScore}' \
     > "$CHECK_NAME-check.json"
 }
-
 
 is_docker_user_root() {
 
