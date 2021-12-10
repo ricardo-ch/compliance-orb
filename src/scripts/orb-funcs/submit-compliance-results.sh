@@ -4,7 +4,7 @@ set -euf -o pipefail
 create_umbrella_json () {
 
     jq --null-input \
-        --arg app "$CIRCLE_PR_REPONAME" \
+        --arg app "$CIRCLE_PROJECT_REPONAME" \
         --arg branch "$CIRCLE_BRANCH" \
         --arg commit_sha "$CIRCLE_SHA1" \
         --arg cc_url "$CIRCLE_BUILD_URL" \
