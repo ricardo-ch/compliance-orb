@@ -16,6 +16,7 @@ append_checks () {
 
     for file in *-check.json;
     do 
+        [[ -e $file ]] || break 
         tmpfile=$(mktemp)
 
         jq ".checks[.checks| length] |= . +$(jq . "$file")" compliance-checks.json > "${tmpfile}"

@@ -50,6 +50,8 @@ get_sudo_permissions() {
   if ! is_sudo_available;
     then
     echo "Info: sudo binary could not be found in container"
+    COMPLIANT=true
+    write_result
     return 0
   fi
 
