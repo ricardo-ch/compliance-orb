@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-CHECK_NAME="Check Root User"
+CHECK_NAME="root-user"
 PENALTY_SCORE=20
 COMPLIANT=false
 
