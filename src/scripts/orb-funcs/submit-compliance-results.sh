@@ -14,7 +14,7 @@ create_umbrella_json () {
 
 append_checks () {    
 
-    for file in *.-check.jsons;
+    for file in *-check.json;
     do 
         tmpfile=$(mktemp)
 
