@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euf -o pipefail
+set -euo pipefail
 
 create_umbrella_json () {
 

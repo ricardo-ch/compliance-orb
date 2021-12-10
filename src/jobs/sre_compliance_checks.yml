@@ -2,7 +2,6 @@ description: >
   This job runs security checks on docker images
 executor:
   name: compliance
-  tag: test
   username: << parameters.executor_registry_username >>
   password: << parameters.executor_registry_password >>
 parameters:
