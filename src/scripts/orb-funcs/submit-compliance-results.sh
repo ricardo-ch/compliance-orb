@@ -26,7 +26,7 @@ append_checks () {
 }
 
 send_data () {
-    curl -X POST -H "Content-Type: application/json" -d @compliance-checks.json http://localhost:5000
+    curl -X POST -H "Content-Type: application/json" -d @compliance-checks.json ${SRE_API_COMPLIANCE_ENDPOINT}
 }
 
 create_umbrella_json
