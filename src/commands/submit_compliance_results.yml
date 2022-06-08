@@ -3,7 +3,6 @@ description: >
 parameters:
   complianceEndpointURL:
     type: string
-    default: ""
 steps:
   - run:
       environment:

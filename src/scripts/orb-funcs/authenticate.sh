@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+set -o nounset
+
 # Authenticate to GCP. All needed values have to be already present in CircleCi context or environment.
 echo "${GCLOUD_SERVICE_KEY}" > "${HOME}"/gcp-key.json
 gcloud auth activate-service-account --key-file "${HOME}"/gcp-key.json

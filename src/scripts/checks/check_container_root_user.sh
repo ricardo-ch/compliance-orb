@@ -1,75 +1,37 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+set -o nounset
 
 CHECK_NAME="root-user"
 PENALTY_SCORE=20
-COMPLIANT=false
-
-if [ -z "${IMAGE_NAME}" ];
-then
-  TARGET_IMAGE=$(isopod image)
-else
-  TARGET_IMAGE="${IMAGE_NAME}"
-fi
 
 write_result() {
+  app_name=$1
+  check_name=$2
+  penalty_score=$3
+  compliant=$4
+
+  [ -d "$app_name" ] || mkdir "$app_name"
 
   jq --null-input \
-    --arg checkname "$CHECK_NAME" \
-    --arg compliant "$COMPLIANT" \
-    --arg penaltyScore "$PENALTY_SCORE" \
-      '{"check_name": $checkname, "compliant": $compliant, "penalty_score": $penaltyScore}' \
-    > "$CHECK_NAME-check.json"
+    --arg checkname "$check_name" \
+    --arg penaltyScore "$penalty_score" \ 
+  --arg compliant "$compliant" \
+    '{"check_name": $checkname, "compliant": $compliant, "penalty_score": $penaltyScore}' \
+    >"$app_name/$CHECK_NAME-check.json"
 }
 
-is_docker_user_root() {
+isopod_files=$(find . -regextype sed -regex ".*isopod.*\.yml")
 
-  uid=$(docker run "$TARGET_IMAGE" id -u)
+for file in $isopod_files; do
 
-  if [ "$uid" == 0 ];
-  then
-    echo "Non compliance detected: Container is using Root user"
-    return 1
-  fi
+  image=$(isopod image -f "$file")
+  application=$(yq .metadata.labels.app "$file")
 
-  return 0
-}
-
-is_sudo_available() {
-
-  sudo_path=$(docker run "$TARGET_IMAGE" which sudo)
-
-  if [ -z "$sudo_path" ];
-  then
-      return 1
-  fi
-}
-
-get_sudo_permissions() {
-
-  if ! is_sudo_available;
-    then
-    echo "Info: sudo binary could not be found in container"
-    COMPLIANT=true
-    write_result
-    return 0
-  fi
-
-  # Check for passwordless sudo permissions
-  sudo_permssions=$(docker run "$TARGET_IMAGE" sudo -nl)
-
-  if echo "$sudo_permssions" | grep -q not\ allowed;
-  then
-    COMPLIANT=true
-    write_result
-    return 0
+  uid=$(docker run "$image" id -u)
+  if [ "$uid" == "0" ]; then
+    write_result "$application" "$CHECK_NAME" $PENALTY_SCORE "false"
   else
-    echo "Non compliance detected: User has passwordless sudo permissions"
-    echo "$sudo_permssions"
-    write_result
-    return 1
+    write_result "$application" "$CHECK_NAME" $PENALTY_SCORE "true"
   fi
-}
 
-is_docker_user_root
-get_sudo_permissions
-
+done

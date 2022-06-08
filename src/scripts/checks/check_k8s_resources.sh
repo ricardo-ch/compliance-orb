@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 CHECK_NAME="k8s-resources"
 PENALTY_SCORE=20
@@ -17,7 +17,7 @@ write_result() {
 render_k8s_resources() {
 
   if [ ! -f "$ISOPOD_FILE" ]; then
-      echo "$ISOPOD_FILE not found. Specify file path with 'isopodFile' in CirclCI. More infos in compliance-orb Readme"
+      echo "$ISOPOD_FILE not found. Specify file path with 'isopodFile' in CircleCI. More infos in compliance-orb Readme"
       exit 1
   fi
 
