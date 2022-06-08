@@ -8,14 +8,14 @@ write_result() {
   app_name=$1
   check_name=$2
   penalty_score=$3
-  compliant=$4
+  compliance=$4
 
   [ -d "$app_name" ] || mkdir "$app_name"
 
   jq --null-input \
     --arg checkname "$check_name" \
     --arg penaltyScore "$penalty_score" \ 
-  --arg compliant "$compliant" \
+    --arg compliant "$compliance" \
     '{"check_name": $checkname, "compliant": $compliant, "penalty_score": $penaltyScore}' \
     >"$app_name/$CHECK_NAME-check.json"
 }
