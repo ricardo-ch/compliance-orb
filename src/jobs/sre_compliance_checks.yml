@@ -14,22 +14,15 @@ parameters:
   url:
     type: string
     default: $DOCKER_JFROG_REGISTRY_URL
-  imageName:
+  complianceEndpointURL:
     type: string
-    default: ""
-  isopodFile:
-    type: string
-    default: "isopod.yml"
-  sreApiUrl:
-    type: string
-    default: $SRE_API_URL
+    default: $SRE_API_COMPLIANCE_ENDPOINT
 steps:
   - checkout
   - setup_remote_docker
   - check_container_user_permissions:
       username: << parameters.username >>
       password: << parameters.password >>
-      imageName: << parameters.imageName >>
       url: << parameters.url >>
   - check_k8s_resources:
       isopodFile: << parameters.isopodFile >>
@@ -37,4 +30,4 @@ steps:
   - port_forward_sre_api:
       context: $GKE_CLUSTER_NAME
   - submit_compliance_results:
-      sreApiUrl: << parameters.sreApiUrl >>
+      complianceEndpointURL: << parameters.complianceEndpointURL >>

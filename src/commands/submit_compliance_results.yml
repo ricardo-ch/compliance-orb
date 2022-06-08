@@ -1,12 +1,12 @@
 description: >
   This command sends the results of the checks to the SRE-API
 parameters:
-  sreApiUrl:
+  complianceEndpointURL:
     type: string
     default: ""
 steps:
   - run:
       environment:
-        SRE_API_URL: << parameters.sreApiUrl >>
+        complianceEndpointURL: << parameters.complianceEndpointURL >>
       name: Send compliance check report to SRE-API compliance endpoint
       command: <<include(scripts/orb-funcs/submit_compliance_report.sh)>>
