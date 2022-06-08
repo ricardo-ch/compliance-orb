@@ -18,6 +18,6 @@ steps:
   - run:
       name: Check for root user in Container
       command: <<include(scripts/checks/check_container_root_user.sh)>> || true
-  - run: 
-      name: Check for passwordless sudo permissions in Container   
+  - run:
+      name: Check for passwordless sudo permissions in Container
       command: <<include(scripts/checks/check_container_passwordless_sudo.sh)>> || true

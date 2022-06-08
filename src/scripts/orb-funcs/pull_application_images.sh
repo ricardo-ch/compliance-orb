@@ -2,7 +2,7 @@
 
 isopod_files=$(find . -regextype sed -regex ".*isopod.*\.yml")
 
-for file in files; do
+for file in $isopod_files; do
    image=$(isopod image -f $file)
-   docker pull $image
+   docker pull "$image"
 done
