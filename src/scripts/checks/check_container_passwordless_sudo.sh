@@ -21,35 +21,21 @@ write_result() {
 }
 
 
-is_sudo_available() {
+isopod_files=$(find . -regextype sed -regex ".*isopod.*\.yml")
 
-  sudo_path=$(docker run "$TARGET_IMAGE" which sudo)
+for file in $isopod_files; do
 
+  image=$(isopod image -f "$file")
+  application=$(yq .metadata.labels.app "$file")
+
+  sudo_path=$(docker run "$image" which sudo)
   if [ -z "$sudo_path" ]; then
-    return 1
+    sudo_permissions=$(docker run "$TARGET_IMAGE" sudo -nl)
+    if [ -z "$sudo_permissions" ]; then
+      write_result "$application" "$CHECK_NAME" $PENALTY_SCORE "false"
+      break 
+    fi     
   fi
-}
+  write_result "$application" "$CHECK_NAME" $PENALTY_SCORE "true"
 
-get_sudo_permissions() {
-
-  if ! is_sudo_available; then
-    echo "Info: sudo binary could not be found in container"
-    COMPLIANT=true
-    write_result
-    return 0
-  fi
-
-  # Check for passwordless sudo permissions
-  sudo_permssions=$(docker run "$TARGET_IMAGE" sudo -nl)
-
-  if echo "$sudo_permssions" | grep -q not\ allowed; then
-    COMPLIANT=true
-    write_result
-    return 0
-  else
-    echo "Non compliance detected: User has passwordless sudo permissions"
-    echo "$sudo_permssions"
-    write_result
-    return 1
-  fi
-}
+done
