@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -o nounset
 
 isopod_files=$(find . -regextype sed -regex ".*isopod.*\.yml")
 

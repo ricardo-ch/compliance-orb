@@ -13,11 +13,11 @@ steps:
       password: << parameters.password >>
       url: << parameters.url >>
   - run:
-      name: Pull application images based on isopod file
-      command: <<include(scripts/orb-funcs/pull_application_images.sh)>> || true
+      name: Pull application images based on isopod files
+      command: <<include(scripts/orb-funcs/pull_application_images.sh)>>
   - run:
       name: Check for root user in Container
-      command: <<include(scripts/checks/check_container_root_user.sh)>> || true
+      command: <<include(scripts/checks/check_container_root_user.sh)>>
   - run:
       name: Check for passwordless sudo permissions in Container
-      command: <<include(scripts/checks/check_container_passwordless_sudo.sh)>> || true
+      command: <<include(scripts/checks/check_container_passwordless_sudo.sh)>>

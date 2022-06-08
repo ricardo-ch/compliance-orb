@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -o nounset
 set -euo pipefail
 
 create_json_compliance_query() {
