@@ -2,15 +2,9 @@ description: >
   This job runs security checks on docker images
 executor:
   name: compliance
-  username: << parameters.executor_registry_username >>
-  password: << parameters.executor_registry_password >>
+  username: << parameters.username >>
+  password: << parameters.password >>
 parameters:
-  executor_registry_username:
-    type: string
-    default: $DOCKER_JFROG_USERNAME
-  executor_registry_password:
-    type: string
-    default: $DOCKER_JFROG_PASSWORD
   username:
     type: string
     default: $DOCKER_JFROG_USERNAME
