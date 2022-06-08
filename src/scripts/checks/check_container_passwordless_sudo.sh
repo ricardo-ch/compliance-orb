@@ -14,7 +14,7 @@ write_result() {
 
   jq --null-input \
     --arg checkname "$check_name" \
-    --arg penaltyScore "$penalty_score" \ 
+    --arg penaltyScore "$penalty_score" \
     --arg compliant "$compliance" \
     '{"check_name": $checkname, "compliant": $compliant, "penalty_score": $penaltyScore}' \
     >"$app_name/$CHECK_NAME-check.json"
