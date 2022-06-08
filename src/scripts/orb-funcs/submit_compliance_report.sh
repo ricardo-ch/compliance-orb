@@ -20,7 +20,7 @@ append_application_checks() {
         [[ -e $file ]] || break
         tmpfile=$(mktemp)
 
-        jq ".checks[.checks| length] |= . +$(jq . "$file")" "$app_name_compliance_checks.json" >"${tmpfile}"
+        jq ".checks[.checks| length] |= . +$(jq . "$file")" "$app_name"_compliance_checks.json >"${tmpfile}"
         cat "${tmpfile}" >"$app_name"_compliance_checks.json
 
     done
