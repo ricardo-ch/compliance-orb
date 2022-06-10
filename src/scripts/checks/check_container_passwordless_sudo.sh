@@ -30,7 +30,7 @@ for file in $isopod_files; do
 
   sudo_path=$(docker run "$image" which sudo)
   if [ -z "$sudo_path" ]; then
-    sudo_permissions=$(docker run "$TARGET_IMAGE" sudo -nl)
+    sudo_permissions=$(docker run "$image" sudo -nl)
     if [ -z "$sudo_permissions" ]; then
       write_result "$application" "$CHECK_NAME" $PENALTY_SCORE "false"
       break 
