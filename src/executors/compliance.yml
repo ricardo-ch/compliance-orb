@@ -1,7 +1,9 @@
 description: >
   Compliance base image executor
 docker:
-  - image: 'ric-docker.jfrog.io/ricardo-ch/compliance:<<parameters.tag>>'
+
+#  - image: 'ric-docker.jfrog.io/ricardo-ch/compliance:<<parameters.tag>>'
+  - image: 'ric-docker.jfrog.io/ricardo-ch/compliance@sha256:c2967b06b1da83134abde9e46ad8b762428aa644a9624c97a303b8b3537e8f80'
     auth:
       username: << parameters.username >>
       password: << parameters.password >>
