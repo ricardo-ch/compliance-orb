@@ -30,7 +30,7 @@ append_application_checks() {
 post_compliance_report() {
     app_name=$1
 
-    curl -X POST -H "Content-Type: application/json" -d @"$app_name"_compliance-checks.json "${SRE_API_COMPLIANCE_ENDPOINT}"
+    curl -X POST -H "Content-Type: application/json" -d @"$app_name"_compliance_checks.json "${SRE_API_COMPLIANCE_ENDPOINT}"
 }
 
 isopod_files=$(find . -regextype sed -regex ".*isopod.*\.yml")
