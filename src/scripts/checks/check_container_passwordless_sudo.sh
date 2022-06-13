@@ -30,7 +30,7 @@ for file in $isopod_files; do
   application=$(yq .metadata.labels.app "$file")
 
   sudo_path=$(docker run "$image" which sudo || true)
-  if [[ -z "$sudo_path" ]]; then
+  if [ -n "$sudo_path" ]; then
     sudo_permissions=$(docker run "$image" sudo -nl || true)
     if [[ ! "$sudo_permissions" == *"password is required"* ]]; then
       write_result "$application" "$CHECK_NAME" $PENALTY_SCORE "false"

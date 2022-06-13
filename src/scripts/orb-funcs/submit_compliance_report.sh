@@ -37,7 +37,7 @@ isopod_files=$(find . -regextype sed -regex ".*isopod.*\.yml")
 
 for file in $isopod_files; do
     app_name=$(yq .metadata.labels.app "$file")
-    create_compliance_query "$app_name"
+    create_json_compliance_query "$app_name"
     append_application_checks "$app_name"
     post_compliance_report "$app_name"
 done
