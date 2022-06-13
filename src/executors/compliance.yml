@@ -3,7 +3,7 @@ description: >
 docker:
 
 #  - image: 'ric-docker.jfrog.io/ricardo-ch/compliance:<<parameters.tag>>'
-  - image: 'ric-docker.jfrog.io/ricardo-ch/compliance@sha256:e08cd9228affb43ec2963967e31390e34a5d4243cd529059bcb45642785eac47'
+  - image: 'ric-docker.jfrog.io/ricardo-ch/compliance@sha256:9891232ebca2ee3ff2544e919e3280328c6dcbd06101bce72c2e0465ecee79bd'
     auth:
       username: << parameters.username >>
       password: << parameters.password >>
