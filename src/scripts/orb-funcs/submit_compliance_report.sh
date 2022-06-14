@@ -17,7 +17,7 @@ create_json_compliance_query() {
 append_application_checks() {
     app_name=$1
 
-    for file in "/tmp/$app_name"/*_check.json; do
+    for file in "/tmp/$app_name"/*-check.json; do
         [[ -s $file ]] || break
         tmpfile=$(mktemp)
 
