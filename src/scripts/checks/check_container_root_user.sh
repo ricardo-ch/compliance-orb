@@ -10,7 +10,7 @@ write_result() {
   penalty_score=$3
   compliance=$4
 
-  [ -d "$app_name" ] || mkdir "$app_name"
+  [ -d "/tmp/$app_name" ] || mkdir "/tmp/$app_name"
 
   jq --null-input \
     --arg checkname "$check_name" \
