@@ -17,7 +17,7 @@ write_result() {
     --arg penaltyScore "$penalty_score" \
     --arg compliant "$compliance" \
     '{"check_name": $checkname, "compliant": $compliant, "penalty_score": $penaltyScore}' \
-    >"$app_name/$CHECK_NAME-check.json"
+    >"/tmp/$app_name/$CHECK_NAME_check.json"
 }
 
 isopod_files=$(find . -regextype sed -regex ".*isopod.*\.yml")
