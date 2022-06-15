@@ -24,7 +24,7 @@ steps:
       username: << parameters.username >>
       password: << parameters.password >>
       url: << parameters.url >>
-#  - check_k8s_resources
+  - check_k8s_resources
   - auth_gke
   - port_forward_sre_api:
       context: $GKE_CLUSTER_NAME
