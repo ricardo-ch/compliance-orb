@@ -2,43 +2,33 @@
 
 CHECK_NAME="k8s-resources"
 PENALTY_SCORE=20
-COMPLIANT=false
+set -o nounset
+set -x
 
 write_result() {
+  app_name=$1
+  check_name=$2
+  penalty_score=$3
+  compliance=$4
+
+  [ -d "/tmp/$app_name" ] || mkdir "/tmp/$app_name"
 
   jq --null-input \
-    --arg checkname "$CHECK_NAME" \
-    --arg compliant "$COMPLIANT" \
-    --arg penaltyScore "$PENALTY_SCORE" \
-      '{"check_name": $checkname, "compliant": $compliant, "penalty_score": $penaltyScore}' \
-    > "$CHECK_NAME-check.json"
+    --arg checkname "$check_name" \
+    --arg penaltyScore "$penalty_score" \
+    --arg compliant "$compliance" \
+    '{"check_name": $checkname, "compliant": $compliant, "penalty_score": $penaltyScore}' \
+    >"/tmp/$app_name/$CHECK_NAME-check.json"
 }
 
 render_k8s_resources() {
+  isopod_file=$1
+  app_name=$2
 
-  if [ ! -f "$ISOPOD_FILE" ]; then
-      echo "$ISOPOD_FILE not found. Specify file path with 'isopodFile' in CircleCI. More infos in compliance-orb Readme"
-      exit 1
-  fi
-
-  # ignore error of missing context. Command only needs to render new resources and doesn't care about already deployed
-  isopod -f "$ISOPOD_FILE" deploy -e prod --dry-run 2> /dev/null || true
+  # Ignore error of missing context. Command only needs to render new resources and doesn't care about already deployed
+  isopod -f "$isopod_file" deploy -e prod --dry-run 2> /dev/null || true
   echo "Info: Created:"
-  ls  /tmp/*-k8s-manifest-files*/*.yml
-}
-
-cleanup_and_quit() {
-
-  rm output.json
-  rm -rf /tmp/-k8s-manifest-files*
-
-  if [ $COMPLIANT = false ];
-  then
-
-    exit 1
-  fi
-
-  exit 0
+  ls  /tmp/$app_name-k8s-manifest-files*/*.yml
 }
 
 write_rego_file() {
@@ -63,29 +53,43 @@ input_container[container] {
 EOT
 }
 
+cleanup_and_quit() {
+  rm -f output.json
+  rm -rf /tmp/-k8s-manifest-files*
+}
+
 check_privileged_flag() {
+  app_name=$1
+  compliance="true"
 
-for file in /tmp/*-k8s-manifest-files*/*.yml
-do
+  for file in /tmp/$app_name-k8s-manifest-files*/*.yml
+  do
+    opa eval -i "$file" -d container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
+    RESULT=$(jq .result[]?.expressions[]?.value.deny[]? < output.json)
 
-  opa eval -i "$file" -d container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
-  RESULT=$(jq .result[]?.expressions[]?.value.deny[]? < output.json)
+    if [ -n "$RESULT" ];
+    then
+      echo "Non compliance detected: $RESULT"
+      compliance="false"  
+      break
+    fi
+  done
+  write_result "$app_name" "$CHECK_NAME" $PENALTY_SCORE $compliance
+}
 
-  if [ -n "$RESULT" ];
-  then
-    echo "Non compliance detected: $RESULT"
-  else
-    COMPLIANT=true
-  fi
+
+write_rego_file
+isopod_files=$(find . -regextype sed -regex ".*isopod.*\.yml")
+
+for file in $isopod_files; do
+
+  application=$(yq .metadata.labels.app "$file")
+  render_k8s_resources "$file" "$application"
+  check_privileged_flag "$application"
 
 done
 
-}
 
-render_k8s_resources
-write_rego_file
-check_privileged_flag
-write_result
 cleanup_and_quit
 
 
