@@ -26,7 +26,7 @@ render_k8s_resources() {
   app_name=$2
 
   # Ignore error of missing context. Command only needs to render new resources and doesn't care about already deployed
-  isopod -f "$isopod_file" deploy -e $CONTEXT_NAME --dry-run 2> /dev/null || true
+  isopod -f "$isopod_file" deploy -e "$CONTEXT_NAME" --dry-run 2> /dev/null || true
   echo "Info: Created:"
   ls  /tmp/"$app_name"-k8s-manifest-files*/*.yml
 }
