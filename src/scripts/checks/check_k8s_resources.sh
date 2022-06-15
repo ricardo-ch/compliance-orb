@@ -32,7 +32,6 @@ render_k8s_resources() {
 }
 
 write_rego_file() {
-
 cat <<EOT >> container-privileged-flag.rego
 package kubernetes.validating.privileged
 
