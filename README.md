@@ -31,6 +31,9 @@ Usage, examples and docs:
 * [Orb](src/README.md)
 
 
+Note that the orb relies on multiple context variables notably in order to authenticate to Kubernetes clusters.
+Thus this orb will only work on Ricardo's dev|prod CircleCi context.
+
 ## How to develop
 
 Make sure the added changes are respecting the requirements described in [Overview](#Overview)
