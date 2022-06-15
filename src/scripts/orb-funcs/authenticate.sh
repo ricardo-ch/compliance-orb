@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -o nounset
+set -x
 
 # Authenticate to GCP. All needed values have to be already present in CircleCi context or environment.
 echo "${GCLOUD_SERVICE_KEY}" > "${HOME}"/gcp-key.json
