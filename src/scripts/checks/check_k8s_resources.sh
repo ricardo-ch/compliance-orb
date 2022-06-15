@@ -28,7 +28,7 @@ render_k8s_resources() {
   # Ignore error of missing context. Command only needs to render new resources and doesn't care about already deployed
   isopod -f "$isopod_file" deploy -e prod --dry-run 2> /dev/null || true
   echo "Info: Created:"
-  ls  /tmp/$app_name-k8s-manifest-files*/*.yml
+  ls  /tmp/"$app_name"-k8s-manifest-files*/*.yml
 }
 
 write_rego_file() {
@@ -62,7 +62,7 @@ check_privileged_flag() {
   app_name=$1
   compliance="true"
 
-  for file in /tmp/$app_name-k8s-manifest-files*/*.yml
+  for file in /tmp/"$app_name"-k8s-manifest-files*/*.yml
   do
     opa eval -i "$file" -d container-privileged-flag.rego "data.kubernetes.validating.privileged" > output.json;
     RESULT=$(jq .result[]?.expressions[]?.value.deny[]? < output.json)
