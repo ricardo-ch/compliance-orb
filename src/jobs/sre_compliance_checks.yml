@@ -2,15 +2,9 @@ description: >
   This job runs security checks on docker images
 executor:
   name: compliance
-  username: << parameters.executor_registry_username >>
-  password: << parameters.executor_registry_password >>
+  username: << parameters.username >>
+  password: << parameters.password >>
 parameters:
-  executor_registry_username:
-    type: string
-    default: $DOCKER_JFROG_USERNAME
-  executor_registry_password:
-    type: string
-    default: $DOCKER_JFROG_PASSWORD
   username:
     type: string
     default: $DOCKER_JFROG_USERNAME
@@ -20,19 +14,19 @@ parameters:
   url:
     type: string
     default: $DOCKER_JFROG_REGISTRY_URL
-  imageName:
+  complianceEndpointURL:
     type: string
-    default: ""
-  isopodFile:
-    type: string
-    default: "isopod.yml"
+    default: $SRE_API_COMPLIANCE_ENDPOINT
 steps:
   - checkout
   - setup_remote_docker
   - check_container_user_permissions:
       username: << parameters.username >>
       password: << parameters.password >>
-      imageName: << parameters.imageName >>
       url: << parameters.url >>
-  - check_k8s_resources:
-      isopodFile: << parameters.isopodFile >>
+  - auth_gke
+  - check_k8s_resources
+  - port_forward_sre_api:
+      context: $GKE_CLUSTER_NAME
+  - submit_compliance_results:
+      complianceEndpointURL: << parameters.complianceEndpointURL >>

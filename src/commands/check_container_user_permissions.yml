@@ -7,20 +7,17 @@ parameters:
     type: string
   url:
     type: string
-  imageName:
-    type: string
-    default: ""
 steps:
-  - docker_registry:
+  - docker_registry_login:
       username: << parameters.username >>
       password: << parameters.password >>
       url: << parameters.url >>
   - run:
-      name: pull target image
-      command: |
-        docker pull $(isopod image)
+      name: Pull application images based on isopod files
+      command: <<include(scripts/orb-funcs/pull_application_images.sh)>>
   - run:
-      environment:
-        IMAGE_NAME: << parameters.imageName >>
-      name: check for sudo permissions and root user in Container
-      command: <<include(scripts/check_container_user_permissions.sh)>>
+      name: Check for root user in Container
+      command: <<include(scripts/checks/check_container_root_user.sh)>>
+  - run:
+      name: Check for passwordless sudo permissions in Container
+      command: <<include(scripts/checks/check_container_passwordless_sudo.sh)>>
