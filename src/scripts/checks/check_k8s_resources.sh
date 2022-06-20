@@ -3,7 +3,6 @@
 CHECK_NAME="k8s-resources"
 PENALTY_SCORE=20
 set -o nounset
-set -x
 
 write_result() {
   app_name=$1

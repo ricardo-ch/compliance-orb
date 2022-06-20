@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -o nounset
-set -x
 
 CHECK_NAME="passwordless-sudo"
 PENALTY_SCORE=20
