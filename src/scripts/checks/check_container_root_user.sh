@@ -27,7 +27,7 @@ for file in $isopod_files; do
   image=$(isopod image -f "$file")
   application=$(yq .metadata.labels.app "$file")
 
-  uid=$(docker run "$image" id -u)
+  uid=$(docker run "$image" id -u || true)
   if [ "$uid" == "0" ]; then
     write_result "$application" "$CHECK_NAME" $PENALTY_SCORE "false"
   else
