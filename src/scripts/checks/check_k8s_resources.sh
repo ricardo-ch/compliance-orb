@@ -85,6 +85,7 @@ for file in $isopod_files; do
   if [[ "$application" == "null" ]]; then
     echo "app label not set, failing build."
     echo "you must set the app label in your isopod file to continue."
+    echo "see https://www.notion.so/smgnet/K8S-Labels-2c196f987aab40cb82dbeed42b670aa9"
     exit 1
   fi
 
