@@ -53,7 +53,7 @@ EOT
 
 cleanup_and_quit() {
   rm -f output.json
-  rm -rf /tmp/-k8s-manifest-files*
+  rm -rf /tmp/*-k8s-manifest-files*
 }
 
 check_privileged_flag() {
@@ -68,7 +68,7 @@ check_privileged_flag() {
     if [ -n "$RESULT" ];
     then
       echo "Non compliance detected: $RESULT"
-      compliance="false"  
+      compliance="false"
       break
     fi
   done
@@ -82,6 +82,13 @@ isopod_files=$(find . -regextype sed -regex ".*isopod.*\.yml")
 for file in $isopod_files; do
 
   application=$(yq .metadata.labels.app "$file")
+  if [[ "$application" == "null" ]]; then
+    echo "app label not set, failing build."
+    echo "you must set the app label in your isopod file to continue."
+    echo "see https://www.notion.so/smgnet/K8S-Labels-2c196f987aab40cb82dbeed42b670aa9"
+    exit 1
+  fi
+
   render_k8s_resources "$file" "$application"
   check_privileged_flag "$application"
 
